@@ -1,0 +1,70 @@
+/* TODO: FIX WIDTH */
+.asteroid {
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.info {
+  display: flex;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  flex-direction: row;
+  justify-content: left;
+  gap: 1rem;
+  align-items: center;
+}
+
+.distance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  gap: 0.4rem;
+}
+
+.distance p {
+  white-space: nowrap;
+  font-size: 1.3rem;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.footer p {
+  font-size: 1.1rem;
+}
+
+.specs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1rem;
+  gap: 1rem;
+  min-width: 220px;
+}
+
+.specs h2 {
+  text-decoration: underline;
+}
+
+.arrow {
+  width: 100%;
+}
+
+@media screen and (min-width: 1880px) {
+  .specs {
+    font-size: 0.9rem;
+  }
+}
