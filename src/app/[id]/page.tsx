@@ -25,22 +25,36 @@ export default async function Asteroid({ params }: Props) {
               src={asteroidLgImg}
               className={styles.imgLg}
             />
+
+            <h1 className={styles.name}>{asteroid?.name}</h1>
             <div className={styles.info}>
-              <h1>{asteroid?.name}</h1>
-              <span>
-                <p>{`Диаметр: Ø${Math.round(
-                  asteroid?.estimated_diameter['meters'].estimated_diameter_max
-                )}`}</p>
-                {asteroid.is_potentially_hazardous_asteroid && <p>⚠ Опасен</p>}
-              </span>
-              <p className={styles.speed}>{`Примерная скорость ${Math.round(
+              <p>{`Диаметр: Ø${Math.round(
+                asteroid?.estimated_diameter['meters'].estimated_diameter_max
+              )}`}</p>
+              {asteroid.is_potentially_hazardous_asteroid && <p>⚠ Опасен</p>}
+              <p>{`Примерная скорость ${Math.round(
                 parseInt(
                   asteroid.close_approach_data[0].relative_velocity
                     .kilometers_per_hour
                 )
               )} км/ч`}</p>
-              <OrderButton newAsteroid={asteroid} />
+              <p>{`Расстояние до земли: ${Math.round(
+                parseInt(
+                  asteroid.close_approach_data[0].miss_distance.kilometers
+                )
+              )}`}</p>
+              <p>{`Дата максимального сближения с землей: ${new Date(
+                asteroid.close_approach_data[0].close_approach_date.replace(
+                  /-/g,
+                  '/'
+                )
+              ).toLocaleString('ru', {
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric',
+              })}`}</p>
             </div>
+            <OrderButton newAsteroid={asteroid} />
           </>
         )}
       </div>
