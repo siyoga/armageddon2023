@@ -2,7 +2,7 @@
 
 import { getNearestAsteroid } from '@/api/asteroid';
 import { Asteroid } from '@/types/Astreroid';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import AsteroidCard from '../AsteroidCard/AsteroidCard';
 
 export default function AsteroidFeed() {
@@ -13,7 +13,12 @@ export default function AsteroidFeed() {
 
   const [asteroids, setAsteroids] = useState<Asteroid[]>([]);
 
-  async function fetchAsteroids() {
+  const setDates = useCallback(() => {
+    setStartDate(endDate);
+    setEndDate(new Date(new Date(startDate).setDate(startDate.getDate() + 1)));
+  }, [startDate, endDate]);
+
+  const fetchAsteroids = useCallback(async () => {
     const asteroidsInfo = await getNearestAsteroid(
       convertDate(startDate),
       convertDate(endDate)
@@ -28,7 +33,7 @@ export default function AsteroidFeed() {
         setAsteroids((prev) => [...prev, asteroid]);
       });
     });
-  }
+  }, [startDate, endDate]);
 
   function convertDate(date: Date): string {
     return `${date.toLocaleString('default', {
@@ -40,9 +45,7 @@ export default function AsteroidFeed() {
 
   useEffect(() => {
     fetchAsteroids();
-  }, [startDate]);
-
-  console.log(asteroids);
+  }, [startDate, fetchAsteroids]);
 
   return (
     <>
@@ -51,12 +54,8 @@ export default function AsteroidFeed() {
           data={asteroid}
           key={asteroid.id}
           isLast={index === asteroids.length - 1}
-          setDates={() => {
-            setStartDate(endDate);
-            setEndDate(
-              new Date(new Date(startDate).setDate(startDate.getDate() + 1))
-            );
-          }}
+          setDates={setDates}
+          showBtn={true}
         />
       ))}
     </>

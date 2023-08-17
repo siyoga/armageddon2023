@@ -8,25 +8,27 @@ import styles from './AsteroidCard.module.css';
 import doubleHeadedArrowImg from '@/assets/arrow.svg';
 import asteroidSmallImg from '@/assets/asteroid_sm.svg';
 import asteroidLargeImg from '@/assets/asteroid_lg.svg';
-import Button from '@/components/Button/Button';
 import store from '@/store/store';
 import { observer } from 'mobx-react';
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import OrderButton from '@/components/OrderButton/OrderButton';
 
 type Props = {
-  setDates: () => void;
-  isLast: boolean;
+  setDates?: () => void;
+  isLast?: boolean;
   data: Asteroid;
+  showBtn: boolean;
 };
 
-function AsteroidCard({ isLast, setDates, data }: Props) {
+function AsteroidCard({ isLast, setDates, data, showBtn }: Props) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!cardRef?.current) return;
 
     const observer = new IntersectionObserver(([entry]) => {
-      if (isLast && entry.isIntersecting) {
+      if (isLast && entry.isIntersecting && setDates !== undefined) {
         setDates();
         observer.unobserve(entry.target);
       }
@@ -41,7 +43,7 @@ function AsteroidCard({ isLast, setDates, data }: Props) {
     <div className={styles.asteroid} ref={cardRef}>
       <h1 className={styles.title}>
         {new Date(
-          data.close_approach_data[0].close_approach_date_full
+          data.close_approach_data[0].close_approach_date.replace(/-/g, '/')
         ).toLocaleString('ru', {
           month: 'short',
           day: '2-digit',
@@ -79,7 +81,11 @@ function AsteroidCard({ isLast, setDates, data }: Props) {
             }
           />
           <div>
-            <h2>{regex.exec(data.name)?.[1]}</h2>
+            <h2>
+              <Link href={`/${data.neo_reference_id}`}>
+                {regex.exec(data.name)?.[1]}
+              </Link>
+            </h2>
             <p>{`Ø ${Math.round(
               data.estimated_diameter['meters'].estimated_diameter_max
             )} м`}</p>
@@ -87,7 +93,7 @@ function AsteroidCard({ isLast, setDates, data }: Props) {
         </span>
       </div>
       <div className={styles.footer}>
-        <Button>ЗАКАЗАТЬ</Button>
+        {showBtn ? <OrderButton newAsteroid={data} /> : null}
         {data.is_potentially_hazardous_asteroid && <p>⚠ Опасен</p>}
       </div>
     </div>

@@ -1,10 +1,10 @@
-/* TODO: FIX WIDTH */
 .asteroid {
   display: flex;
   width: fit-content;
   flex-direction: column;
   justify-content: flex-start;
-  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
 }
 
 .title {
@@ -18,7 +18,11 @@
   flex-direction: row;
   justify-content: left;
   gap: 1rem;
-  align-items: center;
+  align-items: left;
+}
+
+.inCart {
+  color: white;
 }
 
 .distance {
@@ -46,17 +50,41 @@
   font-size: 1.1rem;
 }
 
+.footer button {
+  border: none;
+  outline: none;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  color: orange;
+  border-radius: 2rem;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 1rem;
+  background-color: #f8660026;
+  transition: all 0.3s ease;
+}
+
+.footer button:hover {
+  color: white;
+  background-color: orangered;
+}
+
 .specs {
   display: flex;
+  white-space: nowrap;
   flex-direction: row;
   align-items: center;
   font-size: 1rem;
   gap: 1rem;
-  min-width: 220px;
 }
 
 .specs h2 {
   text-decoration: underline;
+  transition: all 0.3s ease;
+}
+
+.specs h2:hover {
+  color: orange;
 }
 
 .arrow {

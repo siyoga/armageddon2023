@@ -3,10 +3,16 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  max-width: 100%;
 }
 
 .title {
   font-size: 2.8rem;
   padding-bottom: 0.5rem;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  padding-block: 1rem;
+  font-size: 1.5rem;
 }

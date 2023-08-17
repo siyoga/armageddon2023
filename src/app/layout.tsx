@@ -1,9 +1,9 @@
 import './globals.css';
-import styles from './header.module.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Link from 'next/link';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,14 +18,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className={styles.header}>
-          <h1>ARMAGEDDON 2023</h1>
+        <header className="header">
+          <h1>
+            <Link href={'/'}>ARMAGEDDON 2023</Link>
+          </h1>
           <>
             <p>{`ООО "Команда им Б. Уиллиса"`}</p>
             <p>Взрываем астероиды с 1988 года.</p>
           </>
         </header>
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );

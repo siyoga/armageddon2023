@@ -1,4 +1,4 @@
-import type { NearestAsteroids } from '@/types/Astreroid';
+import type { Asteroid, NearestAsteroids } from '@/types/Astreroid';
 import api from './api';
 
 export async function getNearestAsteroid(
@@ -10,13 +10,23 @@ export async function getNearestAsteroid(
       searchParams: {
         start_date: startDate,
         end_date: endDate,
-        api_key: process.env.NASA_API_KEY as string,
       },
     });
 
     return response.json<NearestAsteroids>();
   } catch (error) {
-    console.log(error);
+    return null;
+  }
+}
+
+export async function getSpecificAsteroid(
+  id: string
+): Promise<Asteroid | null> {
+  try {
+    const response = await api.get(`neo/${id}`);
+
+    return response.json<Asteroid>();
+  } catch (error) {
     return null;
   }
 }
